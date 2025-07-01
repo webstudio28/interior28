@@ -14,8 +14,18 @@ export const useAuth = () => {
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(true)
+  const [isDemoMode, setIsDemoMode] = useState(false)
 
   useEffect(() => {
+    // Check for demo mode in localStorage
+    const demoUser = localStorage.getItem('demoUser')
+    if (demoUser) {
+      setUser(JSON.parse(demoUser))
+      setIsDemoMode(true)
+      setLoading(false)
+      return
+    }
+
     // Get initial session
     const getSession = async () => {
       const { data: { session } } = await supabase.auth.getSession()
@@ -52,7 +62,28 @@ export const AuthProvider = ({ children }) => {
     return { data, error }
   }
 
+  const signInDemo = async () => {
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: 'andon.go6ev@gmail.com',
+      password: 'admin1'
+    })
+    
+    if (error) {
+      console.error('Demo login error:', error)
+      return { error }
+    }
+    
+    return { data }
+  }
+
   const signOut = async () => {
+    if (isDemoMode) {
+      setUser(null)
+      setIsDemoMode(false)
+      localStorage.removeItem('demoUser')
+      return { error: null }
+    }
+    
     const { error } = await supabase.auth.signOut()
     return { error }
   }
@@ -60,8 +91,10 @@ export const AuthProvider = ({ children }) => {
   const value = {
     user,
     loading,
+    isDemoMode,
     signUp,
     signIn,
+    signInDemo,
     signOut,
   }
 

@@ -8,6 +8,8 @@ import Dashboard from './pages/Dashboard'
 import CreateFlat from './pages/CreateFlat'
 import FlatDetails from './pages/FlatDetails'
 import RoomDetails from './pages/RoomDetails'
+import FlatSettings from './pages/FlatSettings'
+import RoomSettings from './pages/RoomSettings'
 
 function App() {
   return (
@@ -42,10 +44,26 @@ function App() {
               } 
             />
             <Route 
+              path="/flat/:id/settings" 
+              element={
+                <ProtectedRoute>
+                  <FlatSettings />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
               path="/room/:id" 
               element={
                 <ProtectedRoute>
                   <RoomDetails />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/room/:id/settings" 
+              element={
+                <ProtectedRoute>
+                  <RoomSettings />
                 </ProtectedRoute>
               } 
             />

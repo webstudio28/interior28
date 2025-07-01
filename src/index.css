@@ -90,3 +90,11 @@ textarea:focus {
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
 }
+
+/* Global button styles */
+.btn-primary {
+  @apply bg-[#b86b3c] text-white font-semibold px-8 py-4 rounded-xl hover:bg-[#a05a2c] transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl;
+}
+.btn-secondary {
+  @apply text-white/90 font-medium px-8 py-4 rounded-xl border border-[#f3d5b5] hover:border-[#e7bc91] hover:bg-[#e7bc91]/20 transition-all duration-300;
+}

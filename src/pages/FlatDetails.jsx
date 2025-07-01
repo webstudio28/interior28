@@ -104,7 +104,7 @@ const FlatDetails = () => {
         <div className="mb-8">
           <Link
             to="/dashboard"
-            className="text-blue-300 hover:text-blue-200 font-medium mb-4 inline-flex items-center"
+            className="text-[#e5e7eb] hover:text-[#f3f4f6] font-medium mb-4 inline-flex items-center transition-colors duration-200"
           >
             <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
@@ -113,27 +113,38 @@ const FlatDetails = () => {
           </Link>
         </div>
 
-        <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 mb-8">
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between">
-            <div>
-              <h1 className="text-3xl font-bold text-white mb-2">
-                {flat.building_name}
-              </h1>
-              <p className="text-white/80 text-lg mb-4 md:mb-0">
-                Flat #{flat.flat_number} • {flat.sq_meters} m² • {flat.number_of_rooms} rooms
-              </p>
-            </div>
-            
-            {rooms.length < 10 && (
-              <button
-                onClick={() => setShowAddRoom(true)}
-                className="bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-3 rounded-lg transition-colors duration-200"
-              >
-                Add New Room
-              </button>
-            )}
-          </div>
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold text-white mb-2">
+            {flat.building_name}
+          </h1>
+          <p className="text-white/80 text-lg mb-2">
+            Flat #{flat.flat_number} • {flat.sq_meters} m² • {flat.number_of_rooms} rooms
+            <span className="mx-2">·</span>
+            <a
+              href={`/flat/${flat.id}/settings`}
+              className="inline-flex items-center align-middle text-sm font-medium"
+              style={{ color: '#d1d5db' }}
+              aria-label="Flat Settings"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="#d1d5db" className="w-4 h-4 mr-1">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.527-.94 3.31.843 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.527-.843 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.527.94-3.31-.843-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.527.843-3.31 2.37-2.37.996.614 2.296.07 2.573-1.065z" />
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+              Settings
+            </a>
+          </p>
         </div>
+
+        {rooms.length < 10 && (
+          <div className="flex justify-center mb-8">
+            <button
+              onClick={() => setShowAddRoom(true)}
+              className="btn-primary"
+            >
+              + Add Room
+            </button>
+          </div>
+        )}
 
         {/* Add Room Modal */}
         {showAddRoom && (
@@ -176,15 +187,15 @@ const FlatDetails = () => {
                   <button
                     type="button"
                     onClick={() => setShowAddRoom(false)}
-                    className="px-4 py-2 border border-white/20 text-white font-medium rounded-lg hover:bg-white/10 transition-colors duration-200"
+                    className="btn-secondary"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
-                    className="bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-2 rounded-lg transition-colors duration-200"
+                    className="btn-primary"
                   >
-                    Add Room
+                    + Add Room
                   </button>
                 </div>
               </form>
@@ -205,9 +216,9 @@ const FlatDetails = () => {
               </p>
               <button
                 onClick={() => setShowAddRoom(true)}
-                className="bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-3 rounded-lg transition-colors duration-200"
+                className="btn-primary"
               >
-                Add Your First Room
+                + Add Room
               </button>
             </div>
           </div>
@@ -243,7 +254,7 @@ const FlatDetails = () => {
                 <div className="space-y-3">
                   <Link
                     to={`/room/${room.id}`}
-                    className="block w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 text-center"
+                    className="block w-full bg-[#18181b] text-white font-medium py-3 px-4 rounded-lg hover:bg-black transition-colors duration-200 text-center"
                   >
                     Manage Room
                   </Link>

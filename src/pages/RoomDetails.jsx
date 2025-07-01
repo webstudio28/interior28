@@ -260,6 +260,27 @@ const RoomDetails = () => {
     }
   }
 
+  const handleDownload = async () => {
+    if (!room.transformed_image_url) return
+
+    try {
+      const response = await fetch(room.transformed_image_url)
+      const blob = await response.blob()
+      
+      const url = window.URL.createObjectURL(blob)
+      const link = document.createElement('a')
+      link.href = url
+      link.download = `${room.room_name}-${room.interior_style}-transformed.jpg`
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
+      window.URL.revokeObjectURL(url)
+    } catch (error) {
+      console.error('Error downloading image:', error)
+      alert('Error downloading image. Please try again.')
+    }
+  }
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-main flex items-center justify-center">
@@ -273,7 +294,7 @@ const RoomDetails = () => {
       <div className="min-h-screen bg-gradient-main flex items-center justify-center">
         <div className="text-center text-white">
           <h2 className="text-2xl font-bold mb-4">Room not found</h2>
-          <Link to="/dashboard" className="text-blue-300 hover:text-blue-200">
+          <Link to="/dashboard" className="text-[#e5e7eb] hover:text-[#f3f4f6] font-medium mb-4 inline-flex items-center transition-colors duration-200">
             Back to Dashboard
           </Link>
         </div>
@@ -295,29 +316,29 @@ const RoomDetails = () => {
             Back to {flat.building_name}
           </Link>
         </div>
-
-        <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 mb-8">
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between">
-            <div>
-              <h1 className="text-3xl font-bold text-white mb-2">
-                {room.room_name}
-              </h1>
-              <p className="text-white/80 text-lg">
-                {room.sq_meters} m² • {flat.building_name} #{flat.flat_number}
-              </p>
-            </div>
-            
-            {room.interior_style && (
-              <div className="mt-4 md:mt-0">
-                <span className="bg-blue-600/20 text-blue-300 px-4 py-2 rounded-full text-sm font-medium">
-                  {room.interior_style} Style
-                </span>
-              </div>
-            )}
-          </div>
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold text-white mb-2">
+            {room.room_name}
+          </h1>
+          <p className="text-white/80 text-lg mb-2">
+            {room.sq_meters} m² • {flat.building_name} #{flat.flat_number}
+            <span className="mx-2">·</span>
+            <a
+              href={`/room/${room.id}/settings`}
+              className="inline-flex items-center align-middle text-sm font-medium"
+              style={{ color: '#d1d5db' }}
+              aria-label="Room Settings"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="#d1d5db" className="w-4 h-4 mr-1">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.527-.94 3.31.843 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.527-.843 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.527.94-3.31-.843-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.527.843-3.31 2.37-2.37.996.614 2.296.07 2.573-1.065z" />
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+              Settings
+            </a>
+          </p>
         </div>
 
-        {/* Debug Information */}
+        {/* Debug Information
         <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-6 border border-gray-600/30 mb-8">
           <h3 className="text-lg font-bold text-gray-300 mb-4">
             🔍 Debug Information
@@ -348,9 +369,9 @@ const RoomDetails = () => {
               </p>
             </div>
           </div>
-        </div>
+        </div> */}
 
-        {/* API Test Section */}
+        {/* API Test Section
         <div className="bg-blue-600/20 backdrop-blur-sm rounded-2xl p-6 border border-blue-400/30 mb-8">
           <div className="flex items-start justify-between">
             <div className="flex-1">
@@ -405,7 +426,7 @@ const RoomDetails = () => {
               )}
             </div>
           )}
-        </div>
+        </div> */}
 
         <div className="grid lg:grid-cols-2 gap-8">
           {/* Image Upload Section */}
@@ -421,6 +442,11 @@ const RoomDetails = () => {
                 <p className="text-white/70 mb-4">
                   Upload a photo of your room to get started with AI transformation
                 </p>
+                <div className="bg-blue-600/20 border border-blue-400/30 rounded-lg p-4 mb-4">
+                  <p className="text-blue-200 text-sm">
+                    💡 <strong>Pro tip:</strong> For best results, use wide images that capture the whole room
+                  </p>
+                </div>
                 <label className="bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-3 rounded-lg cursor-pointer transition-colors duration-200 inline-block">
                   {uploading ? 'Uploading...' : 'Choose Photo'}
                   <input
@@ -444,7 +470,7 @@ const RoomDetails = () => {
                       className="w-full h-64 object-cover rounded-lg"
                     />
                     <div className="absolute top-2 right-2">
-                      <label className="bg-black/50 text-white px-3 py-1 rounded-lg text-sm cursor-pointer hover:bg-black/70 transition-colors duration-200">
+                      <label className="bg-[#d97706] hover:bg-[#b45309] text-white px-3 py-1 rounded-lg text-sm cursor-pointer transition-colors duration-200 font-medium">
                         Change
                         <input
                           type="file"
@@ -468,12 +494,15 @@ const RoomDetails = () => {
                       <img
                         src={room.transformed_image_url}
                         alt={`${room.room_name} - ${room.interior_style}`}
-                        className="w-full h-64 object-cover rounded-lg border-2 border-blue-400/50"
+                        className="w-full object-contain rounded-lg border-2 border-blue-400/50"
                       />
-                      <div className="absolute top-2 left-2">
-                        <span className="bg-green-600/80 text-white px-2 py-1 rounded text-xs font-medium">
-                          ✓ AI Transformed
-                        </span>
+                      <div className="absolute top-2 right-2">
+                        <button
+                          onClick={handleDownload}
+                          className="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded-lg text-sm cursor-pointer transition-colors duration-200 font-medium"
+                        >
+                          Download
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -487,18 +516,25 @@ const RoomDetails = () => {
             <h2 className="text-xl font-bold text-white mb-6">Interior Design Style</h2>
             
             <div className="space-y-4">
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-3 gap-3">
                 {INTERIOR_STYLES.map((style) => (
                   <button
                     key={style}
                     onClick={() => setSelectedStyle(style)}
-                    className={`p-3 rounded-lg border transition-all duration-200 text-sm font-medium ${
+                    className={`relative flex flex-col items-center justify-end aspect-square w-full rounded-lg border transition-all duration-200 text-sm font-medium overflow-hidden p-0 ${
                       selectedStyle === style
                         ? 'bg-blue-600 border-blue-500 text-white'
                         : 'bg-white/5 border-white/20 text-white/80 hover:bg-white/10'
                     }`}
                   >
-                    {style}
+                    <img
+                      src={`/assets/images/int-${style.toLowerCase().replace(/ /g, '-')}.jpg`}
+                      alt={style + ' style icon'}
+                      className="absolute inset-0 w-full h-full object-cover z-0"
+                    />
+                    <span className="relative z-10 w-full text-center py-2 bg-black/50 text-white text-xs font-semibold mt-auto">
+                      {style}
+                    </span>
                   </button>
                 ))}
               </div>
@@ -580,7 +616,7 @@ const RoomDetails = () => {
           </div>
         </div>
 
-        {/* AI Transformation Info */}
+        {/* AI Transformation Info
         <div className="mt-8 bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
           <h3 className="text-lg font-bold text-white mb-4">Powered by Stability AI</h3>
           <div className="grid md:grid-cols-3 gap-6 text-white/80">
@@ -610,7 +646,7 @@ const RoomDetails = () => {
               The AI maintains your room's exact dimensions and layout while applying professional interior design styles.
             </p>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   )

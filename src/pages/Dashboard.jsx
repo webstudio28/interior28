@@ -51,9 +51,9 @@ const Dashboard = () => {
         <div className="flex justify-center mb-12">
           <Link
             to="/create-flat"
-            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-4 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+            className="btn-primary"
           >
-            Create New Flat Visualization
+            Create Flat Visualization
           </Link>
         </div>
 
@@ -64,21 +64,15 @@ const Dashboard = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
               </svg>
               <h3 className="text-xl font-semibold text-white mb-4">No Flats Yet</h3>
-              <p className="text-white/70 mb-6">
+              <p className="text-white/70">
                 Start by creating your first flat visualization to see the magic happen.
               </p>
-              <Link
-                to="/create-flat"
-                className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-3 rounded-lg transition-colors duration-200"
-              >
-                Create Your First Flat
-              </Link>
             </div>
           </div>
         ) : (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {flats.map((flat) => (
-              <div key={flat.id} className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 hover:bg-white/15 transition-all duration-300 group">
+              <div key={flat.id} className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 hover:bg-white/15 transition-all duration-300 group relative">
                 <div className="flex items-start justify-between mb-4">
                   <div>
                     <h3 className="text-xl font-semibold text-white mb-2">
@@ -98,10 +92,10 @@ const Dashboard = () => {
                   </div>
                 </div>
                 
-                <div className="space-y-3">
+                <div className="space-y-3 flex items-center gap-2">
                   <Link
                     to={`/flat/${flat.id}`}
-                    className="block w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 text-center"
+                    className="block w-full bg-[#18181b] text-white font-semibold py-3 px-4 rounded-lg hover:bg-black transition-colors duration-200 text-center"
                   >
                     Manage Flat
                   </Link>

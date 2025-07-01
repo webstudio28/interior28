@@ -9,7 +9,7 @@ const AuthForm = () => {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   
-  const { signIn, signUp } = useAuth()
+  const { signIn, signUp, signInDemo } = useAuth()
   const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
@@ -34,6 +34,24 @@ const AuthForm = () => {
     }
   }
 
+  const handleDemoLogin = async () => {
+    setLoading(true)
+    setError('')
+    
+    try {
+      const { error } = await signInDemo()
+      if (error) {
+        setError('Demo login failed. Please try again.')
+      } else {
+        navigate('/dashboard')
+      }
+    } catch (err) {
+      setError('An unexpected error occurred')
+    } finally {
+      setLoading(false)
+    }
+  }
+
   return (
     <div className="max-w-md mx-auto bg-white/10 backdrop-blur-sm rounded-2xl shadow-2xl p-8 border border-white/20">
       <div className="text-center mb-8">
@@ -43,6 +61,30 @@ const AuthForm = () => {
         <p className="text-white/70">
           {isLogin ? 'Sign in to your account' : 'Create your account'}
         </p>
+      </div>
+
+      {/* Demo Login Button */}
+      <div className="mb-6">
+        <button
+          onClick={handleDemoLogin}
+          className="w-full bg-[#d97706] hover:bg-[#b45309] text-white font-semibold py-3 px-4 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#d97706] focus:ring-offset-2 focus:ring-offset-transparent mb-4"
+        >
+          🚀 Try Demo Version
+        </button>
+        <div className="text-center">
+          <p className="text-white/60 text-sm">
+            Experience the app instantly with sample data
+          </p>
+        </div>
+      </div>
+
+      <div className="relative mb-6">
+        <div className="absolute inset-0 flex items-center">
+          <div className="w-full border-t border-white/20"></div>
+        </div>
+        <div className="relative flex justify-center text-sm">
+          <span className="px-2 bg-transparent text-white/60">or continue with email</span>
+        </div>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">

@@ -28,7 +28,7 @@ export default {
         }
       },
       backgroundImage: {
-        'gradient-main': 'linear-gradient(135deg, #1e3a8a 0%, #581c87 100%)',
+        'gradient-main': 'linear-gradient(135deg, #183153 0%, #23272a 50%, #3e2f1c 100%)',
       },
       animation: {
         'fade-in': 'fadeIn 0.5s ease-in-out',

@@ -179,9 +179,9 @@ const CreateFlat = () => {
                   type="button"
                   onClick={addRoom}
                   disabled={rooms.length >= 10}
-                  className="bg-blue-600 hover:bg-blue-700 disabled:bg-blue-800 text-white font-medium px-4 py-2 rounded-lg transition-colors duration-200"
+                  className={`btn-primary ${rooms.length >= 10 ? 'bg-gray-500 cursor-not-allowed hover:bg-gray-500' : ''}`}
                 >
-                  Add Room
+                  + Add Room
                 </button>
               </div>
 
@@ -251,14 +251,14 @@ const CreateFlat = () => {
               <button
                 type="button"
                 onClick={() => navigate('/dashboard')}
-                className="px-6 py-3 border border-white/20 text-white font-medium rounded-lg hover:bg-white/10 transition-colors duration-200"
+                className="btn-secondary"
               >
                 Cancel
               </button>
               <button
                 type="submit"
                 disabled={loading}
-                className="bg-blue-600 hover:bg-blue-700 disabled:bg-blue-800 text-white font-semibold px-8 py-3 rounded-lg transition-colors duration-200"
+                className="btn-primary disabled:bg-blue-800"
               >
                 {loading ? 'Creating...' : 'Create Flat'}
               </button>
