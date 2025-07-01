@@ -17,8 +17,8 @@ const Layout = ({ children }) => {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between items-center h-16">
               <div className="flex items-center">
-                <Link to="/dashboard" className="text-xl font-bold text-white hover:text-blue-300 transition-colors duration-200">
-                  FlatsVision
+                <Link to="/dashboard" className="text-3xl md:text-4xl font-black tracking-wider text-[#f5f0e6] drop-shadow-[0_4px_18px_rgba(30,30,30,0.7)] hover:text-[#f5f0e6] transition-colors duration-200">
+                  interior28
                 </Link>
               </div>
               <div className="flex items-center space-x-4">
